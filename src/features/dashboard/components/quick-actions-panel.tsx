@@ -6,7 +6,7 @@ export function QuickActionsPanel() {
     <div className="space-y-4">
       <h2 className="text-lg font-semibold">Quick actions</h2>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {quickActions.map((action: any) => (
+        {quickActions.map((action) => (
           <QuickActionCard
             key={action.title}
             title={action.title}

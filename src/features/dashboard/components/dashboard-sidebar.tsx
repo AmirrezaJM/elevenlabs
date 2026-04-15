@@ -33,9 +33,6 @@ import {
   Headphones,
 } from "lucide-react";
 import Link from "next/link";
-// import { UsageContainer } from "@/features/billing/components/usage-container";
-// import { VoiceCreateDialog } from "@/features/voices/components/voice-create-dialog";
-import { useState } from "react";
 
 interface MenuItem {
   title: string;
@@ -63,7 +60,7 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
-                render={item.url ? <Link href={item.url} /> : undefined}
+                asChild={!!item.url}
                 isActive={
                   item.url
                     ? item.url === "/"
@@ -75,8 +72,17 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
                 tooltip={item.title}
                 className="h-9 px-3 py-2 text-[13px] tracking-tight font-medium border border-transparent data-[active=true]:border-border data-[active=true]:shadow-[0px_1px_1px_0px_rgba(44,54,53,0.03),inset_0px_0px_0px_2px_white]"
               >
-                <item.icon />
-                <span>{item.title}</span>
+                {item.url ? (
+                  <Link href={item.url}>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </Link>
+                ) : (
+                  <>
+                    <item.icon />
+                    <span>{item.title}</span>
+                  </>
+                )}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
@@ -89,7 +95,6 @@ function NavSection({ label, items, pathname }: NavSectionProps) {
 export function DashboardSidebar() {
   const pathname = usePathname();
   const clerk = useClerk();
-  const [voiceDialogOpen, setVoiceDialogOpen] = useState(false);
 
   const mainMenuItems: MenuItem[] = [
     {
@@ -110,7 +115,6 @@ export function DashboardSidebar() {
     {
       title: "Voice cloning",
       icon: Volume2,
-      onClick: () => setVoiceDialogOpen(true),
     },
   ];
 
@@ -128,11 +132,6 @@ export function DashboardSidebar() {
   ];
 
   return (
-    <>
-    {/* <VoiceCreateDialog
-      open={voiceDialogOpen}
-      onOpenChange={setVoiceDialogOpen}
-    /> */}
     <Sidebar collapsible="icon">
       <SidebarHeader className="flex flex-col gap-4 pt-4">
         <div 
@@ -188,7 +187,6 @@ export function DashboardSidebar() {
       </SidebarContent>
       <div className="border-b border-dashed border-border" />
       <SidebarFooter className="gap-3 py-3">
-        {/* <UsageContainer /> */}
         <SidebarMenu>
           <SidebarMenuItem>
             <UserButton
@@ -213,6 +211,5 @@ export function DashboardSidebar() {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-    </>
   );
 }

@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useStore } from "@tanstack/react-form";
 
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
